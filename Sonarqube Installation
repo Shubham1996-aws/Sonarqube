@@ -1,0 +1,62 @@
+SonarQube Server 7.7 Installation in AWS EC2 Instance
+
+SonarQube Default Port Number:- 9000
+
+Pre Requisite Softwares:-
+
+Java 1.8 or Java 8 is the pre requisite for SonarQube Server.
+
+sudo yum install java-1.8.0-openjdk
+
+java --version
+
+Hardware Requirements:-
+
+SonarQube server requires at least 2GB of RAM to run efficiently and 1GB of free RAM for the OS.
+
+Installation Commands:-
+
+free -h :- to check how much of the RAM size
+
+sudo su -  :- login as a root user
+
+cd /opt    :- go to opt folder(All the third party softwares we are going to install in opt directory)
+
+yum install unzip wget -y
+
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.8.zip
+
+unzip sonarqube-7.8.zip
+
+#As a good security practice, SonarQuber Server is not advised to run sonar service as a root user, so create a new user called nexus and grant sudo access to manage nexus services as follows.
+
+useradd sonar
+
+Give the sudo access to sonar user
+
+visudo
+
+sonar   ALL=(ALL)       NOPASSWD: ALL
+
+Change the owner and group permissions to /opt/sonarqube-7.8/ directory.
+
+chown -R sonar:sonar /opt/sonarqube-7.8/
+chmod -R 775 /opt/sonarqube-7.8/
+
+su - sonar
+
+cd /opt/sonarqube-7.8/bin/linux-x86-64/
+
+go to bin folder and inside bin we have sonar.sh
+
+./sonar.sh start
+
+
+take the ip and map with port 9000 from the browser
+
+after that the default user is "admin" and password is also "admin"
+
+after that you need to generate the token to integrate with the jenkins.
+
+go to administration tab , go to security then users by default admin user is available you can generate the token for admin user or you create the user and then generate 
+the token for that user.
